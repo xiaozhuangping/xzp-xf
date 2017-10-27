@@ -1,0 +1,6 @@
+rootProject.name = 'xzp-xf'
+include 'xzp-xf-sql'
+include 'xzp-xf-pro'
+include 'xzp-xf-pro-impl'
+include 'xzp-xf-web'
+

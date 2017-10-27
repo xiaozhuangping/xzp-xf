@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xzp.xf.sql.mapper.SysPermissionMapper">
+
+    <sql id="sysPermissionBaseColumnSql">
+        sys_permissionId,
+        sys_permissionName,
+        sys_permissionDes
+    </sql>
+
+    <sql id="sysPermissionBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysPermissionId)">
+                    sys_permissionId = #{map.sysPermissionId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysPermissionName)">
+                    AND sys_permissionName = #{map.sysPermissionName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysPermissionDes)">
+                    AND sys_permissionDes = #{map.sysPermissionDes}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertSysPermission" parameterType="xzp.xf.sql.entity.SysPermission">
+        insert into sys_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="null!=sysPermissionId">
+            sys_permissionId,
+        </if>
+        <if test="null!=sysPermissionName">
+            sys_permissionName,
+        </if>
+        <if test="null!=sysPermissionDes">
+            sys_permissionDes,
+        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="null!=sysPermissionId">
+            #{sysPermissionId},
+        </if>
+        <if test="null!=sysPermissionName">
+            #{sysPermissionName},
+        </if>
+        <if test="null!=sysPermissionDes">
+            #{sysPermissionDes},
+        </if>
+        </trim>
+    </insert>
+
+    
+    <delete id="deleteSysPermissionBySysPermissionId" parameterType="Long">
+        DELETE FROM sys_permission WHERE sys_permissionId = #{sysPermissionId}
+    </delete>
+
+    <update id="updateSysPermission" parameterType="xzp.xf.sql.entity.SysPermission">
+        UPDATE sys_permission
+        <set>
+            <if test="null!=sysPermissionName">
+                sys_permissionName = #{sysPermissionName} ,
+            </if>
+            <if test="null!=sysPermissionDes">
+                sys_permissionDes = #{sysPermissionDes} ,
+            </if>
+        </set>
+        WHERE sys_permissionId = #{sysPermissionId}
+    </update>
+
+    <select id="searchSysPermissionByParams" parameterType="map" resultMap="sysPermissionMap">
+        SELECT
+        <include refid="sysPermissionBaseColumnSql"/>
+        FROM sys_permission
+        <include refid="sysPermissionBaseWhereSql"/>
+    </select>
+
+    <resultMap type="xzp.xf.sql.vo.SysPermissionVo" id="sysPermissionMap">
+        <id column="sys_permissionId" property="sysPermissionId"/>
+        <result column="sys_permissionName" property="sysPermissionName"/>
+        <result column="sys_permissionDes" property="sysPermissionDes"/>
+    </resultMap>
+
+</mapper>

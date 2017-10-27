@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xzp.xf.sql.mapper.SysRoleMapper">
+
+    <sql id="sysRoleBaseColumnSql">
+        sys_roleId,
+        sys_roleName,
+        sys_roleDes
+    </sql>
+
+    <sql id="sysRoleBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysRoleId)">
+                    sys_roleId = #{map.sysRoleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysRoleName)">
+                    AND sys_roleName = #{map.sysRoleName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysRoleDes)">
+                    AND sys_roleDes = #{map.sysRoleDes}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertSysRole" parameterType="xzp.xf.sql.entity.SysRole">
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="null!=sysRoleId">
+            sys_roleId,
+        </if>
+        <if test="null!=sysRoleName">
+            sys_roleName,
+        </if>
+        <if test="null!=sysRoleDes">
+            sys_roleDes,
+        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="null!=sysRoleId">
+            #{sysRoleId},
+        </if>
+        <if test="null!=sysRoleName">
+            #{sysRoleName},
+        </if>
+        <if test="null!=sysRoleDes">
+            #{sysRoleDes},
+        </if>
+        </trim>
+    </insert>
+
+    
+    <delete id="deleteSysRoleBySysRoleId" parameterType="Long">
+        DELETE FROM sys_role WHERE sys_roleId = #{sysRoleId}
+    </delete>
+
+    <update id="updateSysRole" parameterType="xzp.xf.sql.entity.SysRole">
+        UPDATE sys_role
+        <set>
+            <if test="null!=sysRoleName">
+                sys_roleName = #{sysRoleName} ,
+            </if>
+            <if test="null!=sysRoleDes">
+                sys_roleDes = #{sysRoleDes} ,
+            </if>
+        </set>
+        WHERE sys_roleId = #{sysRoleId}
+    </update>
+
+    <select id="searchSysRoleByParams" parameterType="map" resultMap="sysRoleMap">
+        SELECT
+        <include refid="sysRoleBaseColumnSql"/>
+        FROM sys_role
+        <include refid="sysRoleBaseWhereSql"/>
+    </select>
+
+    <resultMap type="xzp.xf.sql.vo.SysRoleVo" id="sysRoleMap">
+        <id column="sys_roleId" property="sysRoleId"/>
+        <result column="sys_roleName" property="sysRoleName"/>
+        <result column="sys_roleDes" property="sysRoleDes"/>
+    </resultMap>
+
+</mapper>

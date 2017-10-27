@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xzp.xf.sql.mapper.XinClassifyMapper">
+
+    <sql id="xinClassifyBaseColumnSql">
+        xin_classifyId,
+        xin_classifyName,
+        xin_classifyType,
+        xin_classifyDes,
+        xin_classifyImg,
+        xin_classifyState
+    </sql>
+
+    <sql id="xinClassifyBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.xinClassifyId)">
+                    xin_classifyId = #{map.xinClassifyId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.xinClassifyName)">
+                    AND xin_classifyName = #{map.xinClassifyName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.xinClassifyType)">
+                    AND xin_classifyType = #{map.xinClassifyType}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.xinClassifyDes)">
+                    AND xin_classifyDes = #{map.xinClassifyDes}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.xinClassifyImg)">
+                    AND xin_classifyImg = #{map.xinClassifyImg}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.xinClassifyState)">
+                    AND xin_classifyState = #{map.xinClassifyState}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertXinClassify" parameterType="xzp.xf.sql.entity.XinClassify">
+        insert into xin_classify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="null!=xinClassifyId">
+            xin_classifyId,
+        </if>
+        <if test="null!=xinClassifyName">
+            xin_classifyName,
+        </if>
+        <if test="null!=xinClassifyType">
+            xin_classifyType,
+        </if>
+        <if test="null!=xinClassifyDes">
+            xin_classifyDes,
+        </if>
+        <if test="null!=xinClassifyImg">
+            xin_classifyImg,
+        </if>
+        <if test="null!=xinClassifyState">
+            xin_classifyState,
+        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="null!=xinClassifyId">
+            #{xinClassifyId},
+        </if>
+        <if test="null!=xinClassifyName">
+            #{xinClassifyName},
+        </if>
+        <if test="null!=xinClassifyType">
+            #{xinClassifyType},
+        </if>
+        <if test="null!=xinClassifyDes">
+            #{xinClassifyDes},
+        </if>
+        <if test="null!=xinClassifyImg">
+            #{xinClassifyImg},
+        </if>
+        <if test="null!=xinClassifyState">
+            #{xinClassifyState},
+        </if>
+        </trim>
+    </insert>
+
+    
+    <delete id="deleteXinClassifyByXinClassifyId" parameterType="Long">
+        DELETE FROM xin_classify WHERE xin_classifyId = #{xinClassifyId}
+    </delete>
+
+    <update id="updateXinClassify" parameterType="xzp.xf.sql.entity.XinClassify">
+        UPDATE xin_classify
+        <set>
+            <if test="null!=xinClassifyName">
+                xin_classifyName = #{xinClassifyName} ,
+            </if>
+            <if test="null!=xinClassifyType">
+                xin_classifyType = #{xinClassifyType} ,
+            </if>
+            <if test="null!=xinClassifyDes">
+                xin_classifyDes = #{xinClassifyDes} ,
+            </if>
+            <if test="null!=xinClassifyImg">
+                xin_classifyImg = #{xinClassifyImg} ,
+            </if>
+            <if test="null!=xinClassifyState">
+                xin_classifyState = #{xinClassifyState} ,
+            </if>
+        </set>
+        WHERE xin_classifyId = #{xinClassifyId}
+    </update>
+
+    <select id="searchXinClassifyByParams" parameterType="map" resultMap="xinClassifyMap">
+        SELECT
+        <include refid="xinClassifyBaseColumnSql"/>
+        FROM xin_classify
+        <include refid="xinClassifyBaseWhereSql"/>
+    </select>
+
+    <resultMap type="xzp.xf.sql.vo.XinClassifyVo" id="xinClassifyMap">
+        <id column="xin_classifyId" property="xinClassifyId"/>
+        <result column="xin_classifyName" property="xinClassifyName"/>
+        <result column="xin_classifyType" property="xinClassifyType"/>
+        <result column="xin_classifyDes" property="xinClassifyDes"/>
+        <result column="xin_classifyImg" property="xinClassifyImg"/>
+        <result column="xin_classifyState" property="xinClassifyState"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xzp.xf.sql.mapper.SysUserMapper">
+
+    <sql id="sysUserBaseColumnSql">
+        sys_userId,
+        sys_userName,
+        sys_userDes,
+        sys_userPwd
+    </sql>
+
+    <sql id="sysUserBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysUserId)">
+                    sys_userId = #{map.sysUserId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysUserName)">
+                    AND sys_userName = #{map.sysUserName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysUserDes)">
+                    AND sys_userDes = #{map.sysUserDes}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sysUserPwd)">
+                    AND sys_userPwd = #{map.sysUserPwd}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertSysUser" parameterType="xzp.xf.sql.entity.SysUser">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="null!=sysUserId">
+            sys_userId,
+        </if>
+        <if test="null!=sysUserName">
+            sys_userName,
+        </if>
+        <if test="null!=sysUserDes">
+            sys_userDes,
+        </if>
+        <if test="null!=sysUserPwd">
+            sys_userPwd,
+        </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="null!=sysUserId">
+            #{sysUserId},
+        </if>
+        <if test="null!=sysUserName">
+            #{sysUserName},
+        </if>
+        <if test="null!=sysUserDes">
+            #{sysUserDes},
+        </if>
+        <if test="null!=sysUserPwd">
+            #{sysUserPwd},
+        </if>
+        </trim>
+    </insert>
+
+    
+    <delete id="deleteSysUserBySysUserId" parameterType="Long">
+        DELETE FROM sys_user WHERE sys_userId = #{sysUserId}
+    </delete>
+
+    <update id="updateSysUser" parameterType="xzp.xf.sql.entity.SysUser">
+        UPDATE sys_user
+        <set>
+            <if test="null!=sysUserName">
+                sys_userName = #{sysUserName} ,
+            </if>
+            <if test="null!=sysUserDes">
+                sys_userDes = #{sysUserDes} ,
+            </if>
+            <if test="null!=sysUserPwd">
+                sys_userPwd = #{sysUserPwd} ,
+            </if>
+        </set>
+        WHERE sys_userId = #{sysUserId}
+    </update>
+
+    <select id="searchSysUserByParams" parameterType="map" resultMap="sysUserMap">
+        SELECT
+        <include refid="sysUserBaseColumnSql"/>
+        FROM sys_user
+        <include refid="sysUserBaseWhereSql"/>
+    </select>
+
+    <resultMap type="xzp.xf.sql.vo.SysUserVo" id="sysUserMap">
+        <id column="sys_userId" property="sysUserId"/>
+        <result column="sys_userName" property="sysUserName"/>
+        <result column="sys_userDes" property="sysUserDes"/>
+        <result column="sys_userPwd" property="sysUserPwd"/>
+    </resultMap>
+
+</mapper>

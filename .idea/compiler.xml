@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="xzp-xf-pro-impl_main" target="1.8" />
+      <module name="xzp-xf-pro-impl_test" target="1.8" />
+      <module name="xzp-xf-pro_main" target="1.8" />
+      <module name="xzp-xf-pro_test" target="1.8" />
+      <module name="xzp-xf-sql_main" target="1.8" />
+      <module name="xzp-xf-sql_test" target="1.8" />
+      <module name="xzp-xf-web_main" target="1.8" />
+      <module name="xzp-xf-web_test" target="1.8" />
+      <module name="xzp-xf_main" target="1.8" />
+      <module name="xzp-xf_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
